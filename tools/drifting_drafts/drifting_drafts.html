@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drifting Drafts</title>
+    <meta  name"description" content="An experimental shaft loom weaving draft generator">
+
+    <!-- CSS -->
+    <link rel="stylesheet" type-"type/css" href="../../css/main.css"/>
+    <link rel="stylesheet" type-"type/css" href="css/loom_drafts.css"/>
+    <link rel='stylesheet' href='//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack-subset.css'>
+  </head>
+
+  <body>
+    <div class="header ui_header">
+      <a class="header_title" href="../../index.html"> wyrd drafts:  </a>
+      <div class="nav_container">
+        <a class="nav_link" href="../../words.html">-Words</a>
+        <a class="nav_link" href="../../tools.html">-Tools</a>
+        <a class="nav_link" href="../../threads.html">-Threads</a>
+      </div>
+    </div>
+
+    <main>
+      <div class="content_container"> 
+
+        <div class="ui_container" id="ui_container">
+          <div class="ui_nav">
+            <button class="ui_nav__button active" id"button_ui__synt"> Generator </button>
+            <button class="ui_nav__button" id"button_ui__pattern"> Pattern </button>
+            <button class="ui_nav__button" id"button_ui__Setup"> Setup </button>
+            <button class="ui_nav__button" id"button_ui__Color"> Color </button>
+            <button class="ui_nav__button" id"button_ui__export"> Export </button>
+            <button class="ui_nav__button" id"button_ui__info"> Info </button>
+          </div>
+          <div class="ui_page__container">
+            <div class="ui_page">
+              <div class="ui_page__item" id="ui_page__last">
+              </div>
+
+              <!-- GENERATOR -->
+              <div class="ui_page__item" id="ui_page__synth">
+
+                <div class="ui_control__container">
+                  <div class="ui_section__container">
+                    <div class="ui_control__section"> <h3>Weave Synth</h3></div>
+                    <div class="ui_tooltip"> 
+                      <p class="ui_tooltip__text">Create waveforms to generate weaving patterns by mixing and scaling the signals from two oscillators. <p> 
+                    </div>
+                  </div>
+                  <div class="ui_control__animation">
+                    <div class="animation_button__container">
+                    <button class="ui_control__button ui_animation__button is_playing" id="ui_animation__play">Play</button>
+                    <button class="ui_control__button ui_animation__button " id="ui_animation__pause">Pause</button>
+                    <button class="ui_control__button ui_animation__button" id="ui_animation__stepbck" title="Step backward">&lt;&lt;</button>
+                    <button class="ui_control__button ui_animation__button"
+                            id="ui_animation__stepfwd"title="Step forward">&gt;&gt;</button>
+                    </div>
+                    <div id="ui_viz_canvas" class="ui_viz_canvas">
+                    </div>
+                  </div>
+
+                  
+
+                  <div class="ui_control__container">
+                    <div class="control_slider__container">
+                      <div class="ui_label__container">
+                        <p class="ui_control__label">Mix A/B</p>
+                        <div class="ui_tooltip"> 
+                          <div class="ui_tooltip__arrow"></div>
+                          <p class="ui_tooltip__text">Crossfade between Oscillator 1 & 2</p> 
+                        </div>
+                      </div>
+                      <input type="range" min="0.0" max="1.0" value="0.5"
+                                                              step="0.001" class="control_slider" id="synth_mixer_slider">
+                    </div>
+                    <div class="control_slider__container">
+                      <div class="ui_label__container">
+                        <p class="ui_control__label">Scale</p>
+                        <div class="ui_tooltip"> 
+                          <div class="ui_tooltip__arrow"></div>
+                          <p class="ui_tooltip__text">Scale final waveform</p> 
+                        </div>
+                      </div>
+                      <input type="range" min="1" max="100" value="6" step="1" class="control_slider" id="synth_scale_slider">
+                    </div>
+
+                    <!-- OSC1 -->
+                    <div class="ui_title__container">
+                      <h4 class="ui_control__subtitle">Oscillator 1</h4>
+                      <div class="ui_tooltip"> 
+                        <div class="ui_tooltip__arrow"></div>
+                        <p class="ui_tooltip__text">Control parameters for Oscillator 1. Select shape of waveform and adjust frequency, amplitude, modulation rate and amount<p> 
+                      </div>
+                    </div>
+                    <div class="ui_control__radio">
+                      <div class="ui_label__container">
+                        <p class="ui_control__label">Shape</p>
+                      </div>
+                      <div class="control_radio__container">
+                        <input class="control_radio__input" type="radio"
+                                                            value="SIN"
+                                                            name="osc1_shape__radio"
+                                                            id="osc1_shape__sin" checked>
+                        <label class="control_radio__label" for="osc1_shape__sin">Sine</label>
+                        <input class="control_radio__input" type="radio"
+                                                            value="SQR"
+                                                            name="osc1_shape__radio"
+                                                            id="osc1_shape__sqr">
+                        <label class="control_radio__label" for="osc1_shape__sqr">Square</label>
+                        <input class="control_radio__input" type="radio"
+                                                            value="TRI"
+                                                            name="osc1_shape__radio"
+                                                            id="osc1_shape__tri">
+                        <label class="control_radio__label" for="osc1_shape__tri">Triangle</label>
+                        <input class="control_radio__input" type="radio"
+                                                            value="NOISE"
+                                                            name="osc1_shape__radio"
+                                                            id="osc1_shape__noise">
+                        <label class="control_radio__label"
+                               for="osc1_shape__noise">Noise</label>
+                      </div>
+                    </div>
+
+                    <div class="control_slider__container">
+                      <p class="ui_control__label">Frequency</p>
+                      <input type="range" min="0.001" max="50.0" value="10"
+                                                                 step="0.001" class="control_slider" id="synth_freq1_slider">
+                    </div>
+                    <div class="control_slider__container">
+                      <p class="ui_control__label">Amplitude</p>
+                      <input type="range" min="0.0" max="1.0" value="1.0" step="0.001" class="control_slider" id="synth_amp1_slider">
+                    </div>
+                    <div class="control_slider__container">
+                      <p class="ui_control__label">Mod Rate</p>
+                      <input type="range" min="0.001" max="50" value="0.001"
+                                                               step="0.01" class="control_slider" id="synth_modrate1_slider">
+                    </div>
+                    <div class="control_slider__container">
+                      <p class="ui_control__label">Mod Amount</p>
+                      <input type="range" min="0" max="2" value="0"
+                                                          step="0.01" class="control_slider" id="synth_modamnt1_slider">
+                    </div>
+
+                    <!-- OSC 2 -->
+                    <div class="ui_title__container">
+                      <h4 class="ui_control__subtitle">Oscillator 2</h4>
+                      <div class="ui_tooltip"> 
+                        <div class="ui_tooltip__arrow"></div>
+                        <p class="ui_tooltip__text">Control parameters for Oscillator 2. Select shape of waveform and adjust frequency, amplitude, modulation rate and amount<p> 
+                      </div>
+                    </div>
+
+                    <div class="ui_control__radio">
+                      <p class="ui_control__label">Shape</p>
+                      <div class="control_radio__container">
+                        <input class="control_radio__input" type="radio"
+                                                            value="SIN"
+                                                            name="osc2_shape__radio"
+                                                            id="osc2_shape__sin" checked>
+                        <label class="control_radio__label" for="osc2_shape__sin">Sine</label>
+                        <input class="control_radio__input" type="radio"
+                                                            value="SQR"
+                                                            name="osc2_shape__radio"
+                                                            id="osc2_shape__sqr">
+                        <label class="control_radio__label" for="osc2_shape__sqr">Square</label>
+                        <input class="control_radio__input" type="radio"
+                                                            value="TRI"
+                                                            name="osc2_shape__radio"
+                                                            id="osc2_shape__tri">
+                        <label class="control_radio__label" for="osc2_shape__tri">Triangle</label>
+                        <input class="control_radio__input" type="radio"
+                                                            value="NOISE"
+                                                            name="osc2_shape__radio"
+                                                            id="osc2_shape__noise">
+                        <label class="control_radio__label"
+                               for="osc2_shape__noise">Noise</label>
+                      </div>
+                    </div>
+
+                    <div class="control_slider__container">
+                      <p class="ui_control__label" >Frequency</p>
+                      <input type="range" min="0.001" max="50.0" value="10"
+                                                                 step="0.001" class="control_slider" id="synth_freq2_slider">
+                    </div>
+                    <div class="control_slider__container">
+                      <p class="ui_control__label">Amplitude</p>
+                      <input type="range" min="0.0" max="1.0" value="1.0" step="0.001" class="control_slider" id="synth_amp2_slider">
+                    </div>
+                    <div class="control_slider__container">
+                      <p class="ui_control__label">Mod Rate</p>
+                      <input type="range" min="0.001" max="50" value="0.001"
+                                                               step="0.01" class="control_slider" id="synth_modrate2_slider">
+                    </div>
+                    <div class="control_slider__container">
+                      <p class="ui_control__label">Mod Amount</p>
+                      <input type="range" min="0" max="2" value="0"
+                                                          step="0.01" class="control_slider" id="synth_modamnt2_slider">
+                    </div>
+                  </div>
+
+
+                </div>
+              </div>
+
+              <!-- Pattern -->
+              <div class="ui_page__item" id="ui_page__pattern">
+                <div class="ui_control__container">
+                  <div class="ui_title__container">
+                    <h4 class="ui_control__subtitle"> Pattern Unit </h4>
+                    <div class="ui_tooltip"> 
+                      <div class="ui_tooltip__arrow"></div>
+                      <p class="ui_tooltip__text">The pattern unit is a small sample or section (either generated or drawn) that is repeated over the the threading or treadling creating patterns<p> 
+                    </div>
+                  </div>
+                </div>
+
+                <div class="ui_control__container">
+                  <div class="control_number__container">
+                    <div class="ui_label__container">
+                      <p class="ui_control__label">Threading Unit Size</p>
+                      <div class="ui_tooltip"> 
+                        <div class="ui_tooltip__arrow"></div>
+                        <p class="ui_tooltip__text">Select size or number of threads of the pattern unit to be repeated over the threading</p> 
+                      </div>
+                    </div>
+                    <input type="number" min="2" max="200" value="10"
+                                                           step="1" class="control_number__input" id="threading_unit__size">
+                  </div>
+
+                </div>
+
+                <div class="ui_control__container">
+                  <div class="ui_control__radio">
+                    <div class="ui_label__container">
+                      <p class="ui_control__label">Threading Pattern Unit</p>
+                      <div class="ui_tooltip"> 
+                        <div class="ui_tooltip__arrow"></div>
+                        <p class="ui_tooltip__text">Select source of threading pattern repeat unit, either from generator, simple straight setup or manually drawn below</p> 
+                      </div>
+                    </div>
+                    <div class="control_radio__container">
+                      <input class="control_radio__input" type="radio"
+                                                          value="GENERATOR"
+                                                          name="threading_unit__radio"
+                                                          id="threading_unit__generator" checked>
+                      <label class="control_radio__label" for="threading_unit__generator">GENERATOR</label>
+                      <input class="control_radio__input" type="radio"
+                                                          value="STRAIGHT"
+                                                          name="threading_unit__radio"
+                                                          id="threading_unit__straight">
+                      <label class="control_radio__label" for="threading_unit__straight">STRAIGHT</label>
+                      <input class="control_radio__input" type="radio"
+                                                          value="DRAW"
+                                                          name="threading_unit__radio"
+                                                          id="threading_unit__draw">
+                      <label class="control_radio__label" for="threading_unit__draw">DRAW</label>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div id="threading_pattern__grid"></div>
+
+                <div class="ui_control__container">
+                  <div class="control_number__container">
+                    <div class="ui_label__container">
+                      <p class="ui_control__label">Treadling Unit Size</p>
+                      <div class="ui_tooltip"> 
+                        <div class="ui_tooltip__arrow"></div>
+                        <p class="ui_tooltip__text">Select size or number threads of the pattern unit to be repeated over the treadling</p> 
+                      </div>
+                    </div>
+                    <input type="number" min="2" max="200" value="4"
+                                                           step="1" class="control_number__input" id="treadling_unit__size">
+                  </div>
+
+                </div>
+
+                <div class="ui_control__container">
+                  <div class="ui_control__radio">
+                    <div class="ui_label__container">
+                      <p class="ui_control__label">Treadling Pattern Unit</p>
+                      <div class="ui_tooltip"> 
+                        <div class="ui_tooltip__arrow"></div>
+                        <p class="ui_tooltip__text">Select source of treadling pattern repeat unit, either from generator, simple straight setup or manually drawn below</p> 
+                      </div>
+                    </div>
+                    <div class="control_radio__container">
+                      <input class="control_radio__input" type="radio"
+                                                          value="GENERATOR"
+                                                          name="treadling_unit__radio"
+                                                          id="treadling_unit__generator">
+                      <label class="control_radio__label" for="treadling_unit__generator">GENERATOR</label>
+                      <input class="control_radio__input" type="radio"
+                                                          value="STRAIGHT"
+                                                          name="treadling_unit__radio"
+                                                          id="treadling_unit__straight" checked>
+                      <label class="control_radio__label" for="treadling_unit__straight">STRAIGHT</label>
+                      <input class="control_radio__input" type="radio"
+                                                          value="DRAW"
+                                                          name="treadling_unit__radio"
+                                                          id="treadling_unit__draw">
+                      <label class="control_radio__label" for="treadling_unit__draw">DRAW</label>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div id="treadling_pattern__grid"></div>
+
+                <!-- Repeat -->
+                <div class="ui_control__container">
+                  <div class="ui_title__container">
+                    <h4 class="ui_control__subtitle"> Pattern Repeat </h4>
+                    <div class="ui_tooltip"> 
+                      <div class="ui_tooltip__arrow"></div>
+                      <p class="ui_tooltip__text">The pattern unit can be repeated as is (forward), reversed or alternating between the two in different ways over the threading and treadling, creating symmetry or direction in the draft</p> 
+                    </div>
+                  </div> 
+                </div>
+
+                <div class="ui_control__container">
+                  <div class="ui_control__radio">
+                    <div class="ui_label__container">
+                      <p class="ui_control__label">Threading Repeat</p>
+                      <div class="ui_tooltip"> 
+                        <div class="ui_tooltip__arrow"></div>
+                        <p class="ui_tooltip__text">Choose how to repeat the pattern unit over the threading, straight through("/"), mirrored("/\") or with symbolic expression written out below.</p> 
+                      </div>
+                    </div>
+                    <div class="control_radio__container">
+                      <input class="control_radio__input" type="radio"
+                                                          value="STRAIGHT"
+                                                          name="threading_repeat__radio"
+                                                          id="threading_repeat__straight" checked>
+                      <label class="control_radio__label" for="threading_repeat__straight">/</label>
+                      <input class="control_radio__input" type="radio"
+                                                          value="POINT"
+                                                          name="threading_repeat__radio"
+                                                          id="threading_repeat_point">
+                      <label class="control_radio__label" for="threading_repeat_point">/\/\</label>
+                      <input class="control_radio__input" type="radio"
+                                                          value="ALTERNATE"
+                                                          name="threading_repeat__radio"
+                                                          id="threading_repeat__alternate">
+                      <label class="control_radio__label" for="threading_repeat__alternate">//\\</label>
+                      <input class="control_radio__input" type="radio"
+                                                          value="EXPR"
+                                                          name="threading_repeat__radio"
+                                                          id="threading_repeat__expr">
+                      <label class="control_radio__label"
+                             for="threading_repeat__expr">EXPR</label>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="ui_control__container">
+                  <div class="control_number__container">
+                    <div class="ui_label__container">
+                      <p class="ui_control__label">Threading Expression</p>
+                      <div class="ui_tooltip"> 
+                        <div class="ui_tooltip__arrow"></div>
+                        <p class="ui_tooltip__text">Write out expression for how the threading pattern unit is repeatad using foward-slash("/") and backward-slash ("\") representing forward or reversed repetition</p> 
+                      </div>
+                    </div>
+                    <div class="control_expr__container">
+                      <input type="text" min="1" max="100" value="\/\\"  
+
+                                                           step="1" class="control_expr__input" id="threading_expr__input">
+                      <button class="ui_control__button" id="threading_expr__button">></button>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="ui_control__container">
+                  <div class="ui_control__radio">
+                    <div class="ui_label__container">
+                      <p class="ui_control__label">Treadling Repeat</p>
+                      <div class="ui_tooltip"> 
+                        <div class="ui_tooltip__arrow"></div>
+                        <p class="ui_tooltip__text">Choose how to repeat the pattern unit over the treadling, straight through("/"), mirrored("/\") or with symbolic expression written out below.</p> 
+                      </div>
+                    </div>
+                    <div class="control_radio__container">
+                      <input class="control_radio__input" type="radio"
+                                                          value="STRAIGHT"
+                                                          name="treadling_repeat__radio"
+                                                          id="treadling_repeat__straight" checked>
+                      <label class="control_radio__label" for="treadling_repeat__straight">/</label>
+                      <input class="control_radio__input" type="radio"
+                                                          value="POINT"
+                                                          name="treadling_repeat__radio"
+                                                          id="treadling_repeat_point">
+                      <label class="control_radio__label" for="treadling_repeat_point">/\/\</label>
+                      <input class="control_radio__input" type="radio"
+                                                          value="ALTERNATE"
+                                                          name="treadling_repeat__radio"
+                                                          id="treadling_repeat__alternate">
+                      <label class="control_radio__label" for="treadling_repeat__alternate">//\\</label>
+                      <input class="control_radio__input" type="radio"
+                                                          value="EXPR"
+                                                          name="treadling_repeat__radio"
+                                                          id="treadling_repeat__expr">
+                      <label class="control_radio__label"
+                             for="treadling_repeat__expr">EXPR</label>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="ui_control__container">
+                  <div class="control_number__container">
+                    <div class="ui_label__container">
+                      <p class="ui_control__label">Treadling Expression</p>
+                      <div class="ui_tooltip"> 
+                        <div class="ui_tooltip__arrow"></div>
+                        <p class="ui_tooltip__text">Write out expression for how the treadling pattern unit is repeatad using foward-slash("/") and backward-slash ("\") representing forward or reversed repetition</p> 
+                      </div>
+                    </div>
+                    <div class="control_expr__container">
+                      <input type="text" min="1" max="100" value="\"  
+
+                                                           step="1" class="control_expr__input" id="treadling_expr__input">
+                      <button class="ui_control__button" id="treadling_expr__button">></button>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <!-- Setup -->
+              <div class="ui_page__item" id="ui_page__setup">
+                <div class="ui_control__container">
+                  <div class="ui_title__container">
+                    <h4 class="ui_control__subtitle">Loom Configuration</h4>
+                    <div class="ui_tooltip"> 
+                      <div class="ui_tooltip__arrow"></div>
+                      <p class="ui_tooltip__text">Settings reflecting the type of loom and its configuration as well as the number of warp ends and picks of the sample</p> 
+                    </div>
+                  </div>
+                </div>
+                <div class="control_number__container">
+                  <p class="ui_control__label">Warp Ends </p>
+                  <input type="number" min="1" max="100" value="50"
+                                                         step="1" class="control_number__input" id="warp_count_number">
+
+                </div>
+                <div class="ui_control__container">
+                  <div class="control_number__container">
+                    <p class="ui_control__label">Weft Picks</p>
+                    <input type="number" min="1" max="100" value="50"
+                                                           step="1" class="control_number__input" id="weft_count_number">
+                  </div>
+                </div>
+
+                <div class="ui_control__container">
+                  <div class="control_number__container">
+                    <p class="ui_control__label">Shafts</p>
+                    <input type="number" min="2" max="100" value="4"
+                                                           step="1" class="control_number__input" id="shaft_count_number">
+                  </div>
+                </div>
+
+                <div class="ui_control__container">
+                  <div class="control_number__container">
+                    <p class="ui_control__label">Treadles</p>
+                    <input type="number" min="1" max="100" value="4"
+                                                           step="1" class="control_number__input" id="treadle_count_number">
+                  </div>
+                </div>
+
+                <div class="ui_control__radio">
+                  <p class="ui_control__label">Shed Type</p>
+                  <div class="control_radio__container">
+                    <input class="control_radio__input" type="radio"
+                                                        value="SINKING"
+                                                        name="shed_type__radio"
+                                                        id="shed_type__sinking" checked>
+                    <label class="control_radio__label" for="shed_type__sinking">Sinking</label>
+                    <input class="control_radio__input" type="radio"
+                                                        value="RISING"
+                                                        name="shed_type__radio"
+                                                        id="shed_type__rising">
+                    <label class="control_radio__label" for="shed_type__rising">Rising</label>
+                  </div>
+                </div>
+
+                <div class="ui_control__container">
+                  <div class="ui_title__container">
+                    <h4 class="ui_control__subtitle">Draft Settings</h4>
+                    <div class="ui_tooltip"> 
+                      <div class="ui_tooltip__arrow"></div>
+                      <p class="ui_tooltip__text">Settings for the visual appearence and scaling of the draft</p> 
+                    </div>
+                  </div>
+                </div>
+
+                <div class="ui_control__radio">
+                  <p class="ui_control__label">Drawdown</p>
+                  <div class="control_radio__container">
+                    <input class="control_radio__input" type="radio"
+                                                        value="SIMPLE"
+                                                        name="drawdown_style__radio"
+                                                        id="drawdown_style__simple" checked>
+                    <label class="control_radio__label" for="drawdown_style__simple">Simple</label>
+                    <input class="control_radio__input" type="radio"
+                                                        value="GRID"
+                                                        name="drawdown_style__radio"
+                                                        id="drawdown_style__grid">
+                    <label class="control_radio__label" for="drawdown_style__grid">Grid</label>
+                    <input class="control_radio__input" type="radio"
+                                                        value="STRUCTURE"
+                                                        name="drawdown_style__radio"
+                                                        id="drawdown_style__structure">
+                    <label class="control_radio__label" for="drawdown_style__structure">Structure</label>
+                  </div>
+                </div>
+
+                <div class="control_slider__container">
+                  <p class="ui_control__label">Zoom</p>
+                  <input type="range" min="5" max="35" step="0.1" value="10"                                                                   step="1" class="control_slider" id="draft_scale_slider"/>
+                </div>
+
+                <div class="ui_control__container">
+                  <div class="ui_title__container">
+                    <h4 class="ui_control__subtitle">Tie-Up</h4>
+                    <div class="ui_tooltip"> 
+                      <div class="ui_tooltip__arrow"></div>
+                      <p class="ui_tooltip__text">Generate or draw the tie-up of the draft</p> 
+                    </div>
+                  </div>
+                </div>
+
+                <div class="ui_control__container">
+                  <div class="ui_control__buttons">
+                    <p class="ui_control__label"> Generate </p>
+                    <div class="control_buttons__container">
+                      <button type="button" value="TABBY"
+                                            class="control_buttons__button"
+                                            name="tieup_generate__button"
+                                            id="tieup_generate__tabby">TABBY</button>
+                      <button type="button" value="STRAIGHT"
+                                            class="control_buttons__button"
+                                            name="tieup_generate__button"
+                                            id="tieup_generate__straight">STRAIGHT</button>
+                      <button type="button" value="BATAVIA"
+                                            class="control_buttons__button"
+                                            name="tieup_generate__button"
+                                            id="tieup_generate__batavia">BATAVIA</button>
+                      <button type="button" value="EXPR"
+                                            class="control_buttons__button"
+                                            name="tieup_generate__button"
+                                            id="tieup_generate__expr">EXPR</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="ui_control__container">
+                  <div class="control_number__container">
+                    <div class="ui_label__container">
+                      <p class="control_expr__label">Tie-Up Expression</p>
+                      <div class="ui_tooltip ui_tooltip__long"> 
+                        <div class="ui_tooltip__arrow"></div>
+                        <p class="ui_tooltip__text">Generate twill patterns with expression. A simple formula generates a patterned column that is then repeated with an offset horizontally. <br></br> The formula is structured by alternating numbers of marked/unmarked squares separated with a forward slash "/". Ie the expression (2/1/1/2) will generate the pattern: 1101011. </p> 
+                      </div>
+                    </div>
+                    <div class="control_expr__container">
+                      <input type="text" min="1" max="100" value="2/2"  
+
+                                                           step="1" class="control_expr__input" id="tieup_expr__input">
+                      <button class="ui_control__button" id="tieup_expr__button">></button>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="ui_control__container">
+                  <div class="control_number__container">
+                    <p class="ui_control__label"> Draw Tie-Up  </p>
+                  </div>
+                  <div id="ui_tieup__grid"></div>
+
+                </div>
+              </div>
+
+              <!-- Color -->
+              <div class="ui_page__item" id="ui_page__color">
+
+
+                <div class="ui__container" id="colors__container"> 
+                  <div class="ui_control__container">
+                    <div class="ui_title__container">
+                      <h4 class="ui_control__subtitle">Color Bank</h4>
+                      <div class="ui_tooltip"> 
+                        <div class="ui_tooltip__arrow"></div>
+                        <p class="ui_tooltip__text">Select which colors to use within the project. Click or tap on a color to change it, add or remove colors from bank with +/- butotns</p> 
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="ui_color__select" id="colors__select"> 
+                    <div class="ui_color__input">
+                      <label class="ui_color__label" for="clr_1">A</label>
+                      <input type="color" class="ui_color__button" id="clr_1" name="clr_1"
+                                                                              value="#000000">
+
+                    </div>
+                    <div class="ui_color__input">
+                      <label class="ui_color__label" for="clr_2">B</label>
+                      <input type="color" class="ui_color__button" id="clr_2" name="clr_2"
+                                                                              value="#FFFFFF">
+                    </div>
+
+                  </div>
+                  <button class="ui_control__button" id="colors__add">+</button>
+                  <button class="ui_control__button" id="colors__delete">&mdash;</button>
+
+                </div>
+
+                <div class="ui__container" id="warp_colors__container"> 
+                  <div class="ui_control__container">
+                    <div class="ui_title__container">
+                      <h4 class="ui_control__subtitle">Warp Colors</h4>
+                      <div class="ui_tooltip ui_tooltip__long"> 
+                        <div class="ui_tooltip__arrow"></div>
+                        <p class="ui_tooltip__text">Generate color patterns that are repeated across the warp. Letters are representing colors from the color bank and forgoing numbers represent number of times the indicated color will be multiplied.<br></br>For example, the expression "7A13B" will repeat a pattern consisting of 7 threads of color A and 13 threads of color B</p> 
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="ui_control__container">
+                    <div class="control_number__container">
+                      <p class="ui_control__label">Color Pattern Expression</p>
+                      <div class="control_expr__container">
+                        <input type="text" min="1" max="100" value="5A5B"  
+
+                                                             step="1" class="control_expr__input" id="warp_color_pattern__input">
+                        <button class="ui_control__button" id="warp_color_pattern__button">></button>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="ui__container" id="weft_colors__container"> 
+                  <div class="ui_control__container">
+                    <div class="ui_title__container">
+                      <h4 class="ui_control__subtitle">Weft Colors</h4>
+                      <div class="ui_tooltip ui_tooltip__long"> 
+                        <div class="ui_tooltip__arrow"></div>
+                        <p class="ui_tooltip__text">Generate color patterns that are repeated across the warp. Letters are representing colors from the color bank and forgoing numbers represent number of times the indicated color will be multiplied.<br></br>For example, the expression "7A13B" will repeat a pattern consisting of 7 threads of color A and 13 threads of color B</p> 
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="ui_control__container">
+                    <div class="control_number__container">
+                      <p class="ui_control__label">Color Pattern Expression</p>
+                      <div class="control_expr__container">
+                        <input type="text" min="1" max="100" value="5B5A"  
+
+                                                             step="1" class="control_expr__input" id="weft_color_pattern__input">
+                        <button class="ui_control__button" id="weft_color_pattern__button">></button>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+
+              <!-- Export -->
+              <div class="ui_page__item" id="ui_page__export">
+                <div class="ui_control__container">
+                  <div class="ui_title__container">
+                    <h4 class="ui_control__subtitle">Export Draft To File</h4>
+                    <div class="ui_tooltip"> 
+                      <div class="ui_tooltip__arrow"></div>
+                      <p class="ui_tooltip__text">Export current project file, either as the full draft with info/notes, or just the draft or drawdown</p> 
+                    </div>
+                  </div>
+                </div>
+
+                <div class="ui_control__container">
+                  <div class="control_number__container">
+                    <p class="ui_control__label">Draft Name</p>
+                    <div class="control_text__container">
+                      <input type="text" min="1" max="20" value="wyrd_draft"  
+
+                                                          step="1" class="control_text__input" id="draft_name__input">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="ui_control__container">
+                  <div class="control_number__container">
+                    <p class="ui_control__label">Co-Creator</p>
+                    <div class="control_text__container">
+                      <input type="text" min="1" max="20" value="Your Name"  
+
+                                                          step="1" class="control_text__input" id="co_creator__input">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="ui_control__container">
+                  <div class="control_number__container">
+                    <p class="ui_control__label">Draft Notes</p>
+                  </div>
+                  <div class="control_textbox__container">
+                    <textarea class="control_textbox__input" id="draft_notes__input" rows="8" cols="50">...</textarea>
+                  </div>
+                </div>
+
+
+                <div class="ui_control__container">
+                  <div class="ui_control__radio">
+                    <p class="ui_control__label">Export Options</p>
+                    <div class="control_radio__container">
+                      <input class="control_radio__input" type="radio"
+                                                          value="FULL"
+                                                          name="export_target__radio"
+                                                          id="export_target__full" checked>
+                      <label class="control_radio__label" for="export_target__full">FULL</label>
+                      <input class="control_radio__input" type="radio"
+                                                          value="SIMPLE"
+                                                          name="export_target__radio"
+                                                          id="export_target_simple">
+                      <label class="control_radio__label" for="export_target_simple">DRAFT ONLY</label>
+                      <input class="control_radio__input" type="radio"
+                                                          value="DRAWDOWN"
+                                                          name="export_target__radio"
+                                                          id="export_target__drawdown">
+                      <label class="control_radio__label" for="export_target__drawdown">DRAWDOWN ONLY</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="ui_control__container">
+                  <div class="ui_control__container"> 
+                    <button class="ui_control__button" id="export_draft__button">EXPORT</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Info -->
+              <div class="ui_page__item" id="ui_page__info">
+                <div class="ui_info__container">
+                  <h2 class="ui_info__title">DRIFTING DRAFTS</h2>
+                  <p> This is an early unstable skeleton build of a tool for creating experimental and generative draft samples and patterns for hand weaving. What can be manifested are weaving drafts, or more accurately, partial drafts, samples, sketches and ideas that can be integrated in potential projects. There is more info about weaving drafts to be found <a>HERE</a>. </p>
+
+                  <!-- <p>The use of this generative approach is aiming towards both creating weird and interesting weaving patterns, but also to open up to questions of how we engage with the world, how we make and read patterns, live and create. In a way  perhaps challenge our sense and need for control and explore pattern making in unusual and surprising ways beyond a known and .</p> -->
+                  <p> This tool is building upon generative approaches or ways to create things with the aid of autonomous or semi-autonomous systems. What is here called <strong>GENERATORS</strong> are small applications or systems that in various ways generates data, patterns or leave traces which can be translated into different sections of a weaving draft wherin patterns and textures emerge.</p>
+                  <p>As of now only a single type of generator, a synth like waveform creator, is present, but others are in the makinga.</p>
+
+                  <p>To get more information about a certain setting or section, many of them can display explanatory tooltips by hovering over (or touching on mobile) the title. </p>
+                  <p>A brief explanations of the different section of this app follow below... </p>
+
+                  <h2 class="ui_info__title">GENERATOR</h2>
+                  <p>With the help of small apps or generators this framework can perhaps function as an experimental way of exploring different patterns,
+                  colours and setups. Explorations that can be continue by hand with a shaft loom. </p>
+                  <p>The generators create movements and patterns that are  translated into something applicable to the weaving draft. States, positions and trajectories are sampled into sequences that can then be applied to the draft. </p> 
+                  <p>The <strong>Weave Synth</strong> is a way to work with waveforms through an interface loosely modelled on some kind of synthesizer with two separate oscillators mixed together, though without any sound output. The intent is to work visually with the waveform as well as the draft through manipulating sliders and settings. A way to slowely try things out and explore the interplay between the two waveforms, how they affect eachother and how they are translated ito the draft. </p>
+                  <h2 class="ui_info__title">PATTERNS</h2>
+                  <p> Use the generator, draw or lock a into a straight sequence to create small samples or pattern units that can be applied to either the threading or treadling of the draft. The patterns can then be repeated across the threads in different ways as a way to explore repeating patterns. </p> 
+                  <p>Using symbols "/" and "\" to represent forward or reversed sampling of a pattern unit, a repeat, that is a collection of one or many straight or mirrored pattern units is created. The repeat is then replicated along the full threading or treadling.  </p>
+                  <h2 class="ui_info__title">SETUP</h2>
+                  <p> Every loom is different, and so is every test and sample and project, edit the configuration of the intended loom and settings of the draft as well as adjusting the tie-up. Choose number of warp ends, weft picks, shafts and treadles, or if your loom have a sinking or rising shed.</p>
+                  <p>Adjust the tie-up by selecting a preset, draw/edit the matrix manually or by using expressions to generate twill patterns. The expression reads a simple formula to create a patterned column that is then repeated with an horizontall offset.
+
+The formula is structured by alternating numbers of marked/unmarked squares separated with a forward slash "/". Ie the expression (2/1/1/2) will generate the pattern: 1101011.   </p>
+                  <h2 class="ui_info__title">COLOR</h2>
+                  <p>Different colors, shades, samples and patterns can be explored by creating repeating samples. Add colors to the color bank and chose how to repeat them over the the warp and weft picks by writing an expression. </p> 
+                  <p>Write a number followed by a letter, where the letter represents a color and the number how many times the color is to be repeated. Continue by adding mulitplications of colours and the result will be a pattern that is replicated across the warp and weft.</p>
+                  <h2 class="ui_info__title">EXPORT</h2>
+                  <p>If one might want to save the current draft there is the posibility to export it as as an image fil. One can either export the full draft with all details, coonfigurations and notes attached, or soly the draft or drawdown.</p>
+
+                </div>
+              </div>
+
+            </div>
+          </div> 
+                  <div class="ui_todraft__container" id"#ui_todraft">
+                    <button class="ui_todraft__button">SCROLL TO DRAFT</button>
+                  </div>
+        </div>
+
+
+        <div class="canvas_container" id="canvas_container"> 
+          <div id="draft_canvas" class="draft_canvas"></div>
+          <div class="ui_togenerator__container" id"#ui_togenerator">
+            <button class="ui_togenerator__button">SCROLL TO GENERATOR</button>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+
+    <!-- p5 -->
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.3.1/lib/p5.js"></script>
+    <script src="scripts/Oscillator.js"></script>
+    <script src="scripts/Wave.js"></script>
+    <script src="scripts/Loom.js"></script>
+    <script src="scripts/Draft.js"></script>
+    <script src="scripts/app.js"></script>
+    <script src="scripts/wave_viz.js"></script>
+
+    <!-- js -->
+    <script src="scripts/ui.js"></script>
+  </body>
+
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warp Variation</title>
+    <meta  name"description" content="Simple experimental tool to explore warp colour setups for narrow bands or rigid heddles">
+    </style>
+
+    <!-- CSS -->
+    <link rel="stylesheet" type-"type/css" href="css/warp_variations.css"/>
+    <link rel="stylesheet" type-"type/css" href="../../css/main.css"/>
+
+    <!-- Fonts -->
+    <link rel='stylesheet' href='//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack-subset.css'>
+  </head>
+
+  <body>
+    <div class="header">
+      <a class="header_title" href="../../index.html"> wyrd drafts:  </a>
+      <nav class="nav_container">
+        <a class="nav_link" href="../../words.html">-Words</a>
+        <a class="nav_link" href="../../tools.html">-Tools</a>
+        <a class="nav_link" href="../../threads.html">-Threads</a>
+
+      </nav>
+    </div>
+    <main>
+
+      <div class="content_container"> 
+        <div class="ui_container">
+          <h3>Warp Variations</h3>
+          <div class="ui_control__container">
+            <div class="ui_control__animation">
+              <button class="ui_control__toggle is_playing" id="ui_animation__playpause">Pause</button>
+              <div class="ui_animation__step">
+                <button class="ui_control__button" id="ui_animation__stepbck">&lt;&lt;</button>
+                <button class="ui_control__button"
+                        id="ui_animation__stepfwd">&gt;&gt;</button>
+              </div>
+            </div>
+          </div>
+          <div class="ui_control__container">
+            <div class="control_slider__container">
+              <input type="range" min="1" max="10" value="1" step=".1" class="control_slider" id="synth_scale_slider">
+            </div>
+            <div class="ui_control__dual">
+              <div class="ui_control__container">
+                <div class="control_slider__container">
+                  <input type="range" min="0.001" max="50.0" value="10"
+                                                             step="0.001" class="control_slider" id="synth_freq1_slider">
+                </div>
+                <div class="control_slider__container">
+                  <input type="range" min="0.0" max="1.0" value="1.0" step="0.001" class="control_slider" id="synth_amp1_slider">
+                </div>
+                <div class="control_slider__container">
+                  <input type="range" min="0.001" max="10" value="0.001"
+                                                           step="0.01" class="control_slider" id="synth_modrate1_slider">
+                </div>
+                <div class="control_slider__container">
+                  <input type="range" min="0" max="2" value="0"
+                                                      step="0.01" class="control_slider" id="synth_modamnt1_slider">
+                </div>
+              </div>
+
+              <div class="ui_control__container">
+                <div class="control_slider__container">
+                  <input type="range" min="0.001" max="50.0" value="10"
+                                                             step="0.001" class="control_slider" id="synth_freq2_slider">
+                </div>
+                <div class="control_slider__container">
+                  <input type="range" min="0.0" max="1.0" value="1.0" step="0.001" class="control_slider" id="synth_amp2_slider">
+                </div>
+                <div class="control_slider__container">
+                  <input type="range" min="0.001" max="10" value="0.001"
+                                                           step="0.01" class="control_slider" id="synth_modrate2_slider">
+                </div>
+                <div class="control_slider__container">
+                  <input type="range" min="0" max="2" value="0"
+                                                      step="0.01" class="control_slider" id="synth_modamnt2_slider">
+                </div>
+              </div>
+            </div>
+
+            <div class="ui_control__dual">
+              <div class="control_number__container">
+                <p class="ui_control__label">Warp Ends </p>
+                <input type="number" min="1" max="100" value="31"
+                                                       step="1" class="control_number__input" id="warp_count_number">
+
+              </div>
+              <div class="control_number__container">
+                <p class="ui_control__label">Weft Picks</p>
+                <input type="number" min="1" max="100" value="18"
+                                                       step="1" class="control_number__input" id="weft_count_number">
+              </div>
+            </div>
+
+            <div class="ui_color__container"> 
+              <div class="ui_color__select" id="ui_color__select"> 
+                <input type="color" class="ui_color__button" id="clr_1" name="clr_1"
+                                                                        value="#000000">
+                <!-- <label for="clr_1">Color 1</label> -->
+                <input type="color" class="ui_color__button" id="clr_2" name="clr_2"
+                                                                        value="#e66465">
+                <!-- <label for="clr_2">Color 2</label> -->
+              </div>
+              <button class="ui_control__button" id="color_button__add">+</button>
+              <button class="ui_control__button" id="color_button__delete">&mdash;</button>
+            </div>
+
+          </div>
+
+
+
+        </div>
+
+        <div class="canvas_container"> 
+          <div id="draft_canvas" class="draft_canvas">
+          </div>
+        </div>
+
+
+      </div>
+
+    </main>
+    <!-- p5 -->
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.3.1/lib/p5.js"></script>
+    <script src="scripts/Oscillator.js"></script>
+    <script src="scripts/sketch.js"></script>
+    <!-- js -->
+    <script src="scripts/ui.js"></script>
+  </body>
+
+</html>
