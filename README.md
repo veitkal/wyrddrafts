@@ -18,10 +18,12 @@ There are many large and small things plotted out to be built within this frame.
 Here follows some specific things that are currently being worked on.
 
 ### DRIFTING DRAFTS
--Add additional generators closer to the core ideas behind the app
--Add a "delete last thread" for pattern repeat (ie to be able to mirror sections without duplicate threadings /\)
--Add more ways of generating color patterns
--Expand color pattern expression capabilities
+- Fix export scaling
+- Set responsive init warp/weft count
+- Add additional generators closer to the core ideas behind the app
+- Add a "delete last thread" for pattern repeat (ie to be able to mirror sections without duplicate threadings /\)
+- Add more ways of generating color patterns
+- Expand color pattern expression capabilities
 
 ### DRIFTING DRAFTS
 This whole app is very much a placeholder
