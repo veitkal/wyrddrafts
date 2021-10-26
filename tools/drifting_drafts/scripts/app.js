@@ -445,7 +445,8 @@ let p5_draft = new p5(function (p) {
   // TODO: More and better HQ export options
   p.export_draft = () => {
     let dimensions = draft.get_dimensions(); // Get dimensions of draft
-    let export_w = app_settings.canvas_width; // Get canvas width
+    // let export_w = app_settings.canvas_width; // Get canvas width
+    let export_w = 1500; // Get canvas width
     let export_h = export_w * 1.412; // Scale to A4 dimensions
     let new_width; 
     let new_height;
@@ -507,11 +508,11 @@ let p5_draft = new p5(function (p) {
         export_buffer.text("Loom Type: " + type, 150,600);
 
         // Color
-        export_buffer.text("Colours: ", app_settings.canvas_width / 2, 200);
+        export_buffer.text("Colours: ", export_w / 2, 200);
 
         export_buffer.textSize(app_settings.text_size.small);
         colors_select_arr.forEach( (el, idx) => {
-          let x = app_settings.canvas_width / 2 + 100;
+          let x = export_w / 2 + 100;
           x = (idx > 2) ? x + 250 : x;
           let y = 250 + (50 * (idx % 3));
 
@@ -527,9 +528,9 @@ let p5_draft = new p5(function (p) {
         export_buffer.textSize(app_settings.text_size.regular);
         export_buffer.stroke(styling.fg);
         export_buffer.fill(styling.fg);
-        export_buffer.text("Notes: ", app_settings.canvas_width / 2, 400);
+        export_buffer.text("Notes: ", export_w / 2, 400);
         export_buffer.textSize(app_settings.text_size.small);
-        export_buffer.text(app_settings.draft_notes, app_settings.canvas_width / 2 + 25, 450, export_w / 3);
+        export_buffer.text(app_settings.draft_notes, export_w / 2 + 25, 450, export_w / 3);
 
         break;
       case "SIMPLE": // Export draft only
