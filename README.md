@@ -2,6 +2,8 @@
 
 This site contains the early workings and gatherings of experimental digital hand weaving tools. They are/will be more or less usefull pieces of software aimed towards exploring pattern and draft making for weaving, textile craft and beyond.
 
+View site in current state at https://www.wyrddrafts.org
+
 It is part of an ongoing artistic research project concerning textile and digital technologies, pattern making/reading, (im)material encounters and relations, creativity, ethics, ontology and wide ranges of weird topics.
 
 The project is kindly supported by The Swedish National Handicraft Counsil.
