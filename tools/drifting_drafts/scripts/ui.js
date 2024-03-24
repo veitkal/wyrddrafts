@@ -50,9 +50,13 @@ const ui_pattern_target = document.getElementsByName('pattern_target__toggles');
 const ui_threading_repeat = document.getElementsByName('threading_repeat__radio');
 const ui_threading_expr = document.querySelector('#threading_expr__input');
 const ui_threading_expr_button = document.querySelector('#threading_expr__button');
+const ui_threading_offset = document.querySelector('#threading_offset__input');
+const ui_threading_offset_button = document.querySelector('#threading_offset__button');
 const ui_treadling_repeat = document.getElementsByName('treadling_repeat__radio');
 const ui_treadling_expr = document.querySelector('#treadling_expr__input');
 const ui_treadling_expr_button = document.querySelector('#treadling_expr__button');
+const ui_treadling_offset = document.querySelector('#treadling_offset__input');
+const ui_treadling_offset_button = document.querySelector('#treadling_offset__button');
 
 
 const ui_threading_unit_size = document.querySelector('#threading_unit__size');
@@ -676,6 +680,16 @@ ui_threading_expr.addEventListener('click', () => {
   document.querySelector('#threading_repeat__expr').checked = true;
 });
 
+// Threading Offset
+ui_threading_offset_button.addEventListener('click', () => {
+  app_settings.pattern_unit.threading_offset = ui_threading_offset.value;
+  // console.log(app_settings.pattern_repeat.threading_offset)
+});
+
+ui_threading_offset.addEventListener('change', () => {
+  app_settings.pattern_unit.threading_offset = ui_threading_offset.value;
+});
+
 // Treadlling Repeat Radio buttons 
 ui_treadling_repeat.forEach( (el) => {
   el.addEventListener('click', () => {
@@ -715,6 +729,15 @@ ui_treadling_expr.addEventListener('click', () => {
   document.querySelector('#treadling_repeat__expr').checked = true;
 });
 
+// Threading Offset
+ui_treadling_offset_button.addEventListener('click', () => {
+  app_settings.pattern_unit.treadling_offset = ui_treadling_offset.value;
+  // console.log(app_settings.pattern_repeat.threading_offset)
+});
+
+ui_treadling_offset.addEventListener('change', () => {
+  app_settings.pattern_unit.treadling_offset = ui_treadling_offset.value;
+});
 
 /* SETUP */
 ui_warp_count.addEventListener('change', () => {
