@@ -26,9 +26,11 @@ var app_settings = {
     threading : [], 
     threading_type : "GENERATOR",
     threading_size : 10,
+    threading_offset : 0,
     treadling : [],
     treadling_type : "STRAIGHT",
-    treadling_size : 4
+    treadling_size : 4,
+    treadling_offset : 0,
   },
   pattern_repeat: { 
     threading : "/", 
@@ -183,16 +185,84 @@ let p5_draft = new p5(function (p) {
     let reverse_sample = [...sample].reverse();
     let straight_sample = [...sample];
     let new_sample =  [];
+    // console.log(app_settings.pattern_repeat.threading_offset)
 
     if(expr.length > 0) {
-      for(let i = 0; i < expr.length; i++) {
-        if(expr[i] === "/") {
-          new_sample.push(...straight_sample);
+
+    switch(_target) {
+      case "THREADING":
+      if(app_settings.pattern_unit.threading_offset <= 0) {
+        for(let i = 0; i < expr.length; i++) {
+          // No offset
+          if(expr[i] === "/") {
+            new_sample.push(...straight_sample);
+          }
+          if(expr[i] === "\\") {
+            new_sample.push(...reverse_sample);
+          }
         }
-        if(expr[i] === "\\") {
-          new_sample.push(...reverse_sample);
+      } else {
+        // Offset
+        const rep_count = Math.floor(rep.length)
+        for(let i = 0; i < rep_count; i++) {
+          let new_part = [];
+          let reverse_part = [];
+          for(let j = 0; j < straight_sample.length; j++) {
+              new_part[j] = (straight_sample[j] + (app_settings.pattern_unit.threading_offset * i)) % app_settings.shaft_count;
+          }
+          for(let j = 0; j < reverse_sample.length; j++) {
+              reverse_part[j] = (reverse_sample[j] + (app_settings.pattern_unit.threading_offset * i)) % app_settings.shaft_count;
+          }
+
+          if(expr[i % expr.length] === "/") {
+            new_sample.push(...new_part);
+          }
+          if(expr[i % expr.length] === "\\") {
+            new_sample.push(...reverse_part);
+          }
         }
+
       }
+        break;
+      case "TREADLING":
+
+      if(app_settings.pattern_unit.treadling_offset <= 0) {
+        for(let i = 0; i < expr.length; i++) {
+          // No offset
+          if(expr[i] === "/") {
+            new_sample.push(...straight_sample);
+          }
+          if(expr[i] === "\\") {
+            new_sample.push(...reverse_sample);
+          }
+        }
+      } else {
+        // Offset
+        const rep_count = Math.floor(rep.length)
+        for(let i = 0; i < rep_count; i++) {
+          let new_part = [];
+          let reverse_part = [];
+          for(let j = 0; j < straight_sample.length; j++) {
+              new_part[j] = (straight_sample[j] + (app_settings.pattern_unit.treadling_offset * i)) % app_settings.treadle_count;
+          }
+          for(let j = 0; j < reverse_sample.length; j++) {
+              reverse_part[j] = (reverse_sample[j] + (app_settings.pattern_unit.treadling_offset * i)) % app_settings.treadle_count;
+          }
+
+          if(expr[i % expr.length] === "/") {
+            new_sample.push(...new_part);
+          }
+          if(expr[i % expr.length] === "\\") {
+            new_sample.push(...reverse_part);
+          }
+        }
+
+      }
+        break;
+      default:
+        break;
+    }
+
     }
 
 
